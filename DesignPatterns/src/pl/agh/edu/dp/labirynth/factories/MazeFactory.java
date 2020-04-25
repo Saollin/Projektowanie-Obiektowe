@@ -1,8 +1,8 @@
 package pl.agh.edu.dp.labirynth.factories;
 
-import pl.agh.edu.dp.labirynth.Door;
-import pl.agh.edu.dp.labirynth.Room;
-import pl.agh.edu.dp.labirynth.Wall;
+import pl.agh.edu.dp.labirynth.elements.Door;
+import pl.agh.edu.dp.labirynth.elements.Room;
+import pl.agh.edu.dp.labirynth.elements.Wall;
 
 public interface MazeFactory {
     Room createRoom(int n);

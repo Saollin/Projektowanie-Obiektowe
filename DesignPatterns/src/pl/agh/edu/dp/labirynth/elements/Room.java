@@ -1,4 +1,6 @@
-package pl.agh.edu.dp.labirynth;
+package pl.agh.edu.dp.labirynth.elements;
+
+import pl.agh.edu.dp.labirynth.Direction;
 
 import java.util.EnumMap;
 import java.util.Map;

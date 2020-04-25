@@ -1,4 +1,4 @@
-package pl.agh.edu.dp.labirynth;
+package pl.agh.edu.dp.labirynth.elements;
 
 public class Wall extends MapSite {
     public Wall(){

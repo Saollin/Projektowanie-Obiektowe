@@ -1,12 +1,14 @@
 package pl.agh.edu.dp.labirynth;
 
+import pl.agh.edu.dp.labirynth.elements.Room;
+
 import java.util.Vector;
 
 public class Maze {
     private Vector<Room> rooms;
 
     public Maze() {
-        this.rooms = new Vector<Room>();
+        this.rooms = new Vector<>();
     }
 
     public void addRoom(Room room){

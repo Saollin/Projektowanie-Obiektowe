@@ -1,6 +1,7 @@
 package pl.agh.edu.dp.labirynth;
 
 import pl.agh.edu.dp.labirynth.builders.MazeBuilder;
+import pl.agh.edu.dp.labirynth.elements.Room;
 import pl.agh.edu.dp.labirynth.factories.MazeFactory;
 
 import java.util.ArrayList;
