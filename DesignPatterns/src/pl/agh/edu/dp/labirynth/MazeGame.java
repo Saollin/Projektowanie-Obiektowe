@@ -39,14 +39,15 @@ public class MazeGame {
                 continue;
             }
             for(int j = 0; j < columns; j++) {
-                mazeBuilder.setCommonWall(rooms.get(columns * i + j), rooms.get(columns * i + columns + j - 1), Direction.South);
+                mazeBuilder.setCommonWall(rooms.get(columns * i + j), rooms.get(columns * i + columns + j), Direction.South);
             }
         }
 
         mazeBuilder.setDoor(rooms.get(0), rooms.get(1));
         mazeBuilder.setDoor(rooms.get(1), rooms.get(2));
         mazeBuilder.setDoor(rooms.get(2), rooms.get(3));
-        mazeBuilder.setDoor(rooms.get(0), rooms.get(9));
+        mazeBuilder.setDoor(rooms.get(0), rooms.get(10));
+        mazeBuilder.setDoor(rooms.get(70), rooms.get(80));
     }
 
     public int getRows() {
