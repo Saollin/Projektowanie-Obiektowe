@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,17 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agh.edu.dp.visualisation.MazeGameController">
       <GridPane>
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.3999755859375" minWidth="10.0" prefWidth="366.1999877929687" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="233.40001220703118" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.59996337890624" minWidth="10.0" prefWidth="395.99998779296874" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="204.80001220703122" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-            <Label alignment="CENTER" contentDisplay="RIGHT" text="Life of player: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="222.0" text="Twój poziom życia:" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -62,5 +62,11 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <AnchorPane fx:id="maze" prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane fx:id="mazePane" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="450.0">
+      <VBox.margin>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      </VBox.margin></AnchorPane>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
 </VBox>

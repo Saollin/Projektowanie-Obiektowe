@@ -9,4 +9,9 @@ public class BombedRoom extends Room {
     public void Enter() {
         System.out.println("You're in bombed room");
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getRoomNumber());
+    }
 }
