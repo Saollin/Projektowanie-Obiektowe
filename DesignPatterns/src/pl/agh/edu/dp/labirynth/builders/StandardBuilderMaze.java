@@ -1,14 +1,15 @@
 package pl.agh.edu.dp.labirynth.builders;
 
 import pl.agh.edu.dp.labirynth.*;
+import pl.agh.edu.dp.labirynth.factories.MazeFactory;
 
 public class StandardBuilderMaze implements MazeBuilder {
     private Maze currentMaze;
-    private int roomCounter;
+    private MazeFactory factory;
 
-    public StandardBuilderMaze() {
+    public StandardBuilderMaze(MazeFactory factory) {
         this.currentMaze = new Maze();
-        this.roomCounter = 0;
+        this.factory = factory;
     }
 
     @Override
@@ -19,7 +20,7 @@ public class StandardBuilderMaze implements MazeBuilder {
     @Override
     public void addRoom(Room newRoom) {
         for(Direction direction:Direction.values()) {
-            newRoom.setSide(direction, new Wall());
+            newRoom.setSide(direction, factory.createWall());
         }
         this.currentMaze.addRoom(newRoom);
     }
@@ -31,7 +32,7 @@ public class StandardBuilderMaze implements MazeBuilder {
             System.out.println("No common wall between these rooms");
             return;
         }
-        Door newDoor = new Door(first, second);
+        Door newDoor = factory.createDoor(first, second);
         first.setSide(commonWallDirection, newDoor);
         second.setSide(Direction.oppositeSite(commonWallDirection), newDoor);
     }
@@ -39,7 +40,7 @@ public class StandardBuilderMaze implements MazeBuilder {
     @Override
     public void setCommonWall(Room first, Room second, Direction directionInFirst) {
         if(first.getSide(directionInFirst) == null) {
-            first.setSide(directionInFirst, new Wall());
+            first.setSide(directionInFirst, factory.createWall());
         }
         second.setSide(Direction.oppositeSite(directionInFirst), first.getSide(directionInFirst));
     }
