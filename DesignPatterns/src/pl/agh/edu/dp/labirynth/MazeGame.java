@@ -1,34 +1,33 @@
 package pl.agh.edu.dp.labirynth;
 
 import pl.agh.edu.dp.labirynth.builders.MazeBuilder;
+import pl.agh.edu.dp.labirynth.factories.MazeFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MazeGame {
-    public void createMaze(MazeBuilder mazeBuilder){
-        Room room1 = new Room(1);
-        Room room2 = new Room(2);
-        Room room3 = new Room(3);
-        Room room4 = new Room(4);
-        Room room5 = new Room(5);
-
-        mazeBuilder.addRoom(room1);
-        mazeBuilder.addRoom(room2);
-        mazeBuilder.addRoom(room3);
-        mazeBuilder.addRoom(room4);
-        mazeBuilder.addRoom(room5);
+    public void createMaze(MazeBuilder mazeBuilder, MazeFactory mazeFactory){
+        List<Room> rooms = new ArrayList<>();
+        for(int i = 0; i < 7; i++) {
+            Room newRoom = mazeFactory.createRoom(i);
+            rooms.add(newRoom);
+            mazeBuilder.addRoom(newRoom);
+        }
         /*  ___
            | 5 |___
            | 2 | 3 |
            |_1___4_|
          */
-        mazeBuilder.setCommonWall(room1, room2, Direction.North);
-        mazeBuilder.setCommonWall(room2, room3, Direction.East);
-        mazeBuilder.setCommonWall(room3, room4, Direction.South);
-        mazeBuilder.setCommonWall(room4, room1, Direction.West);
-        mazeBuilder.setCommonWall(room2, room5, Direction.North);
+        mazeBuilder.setCommonWall(rooms.get(0), rooms.get(1), Direction.North);
+        mazeBuilder.setCommonWall(rooms.get(1), rooms.get(2), Direction.East);
+        mazeBuilder.setCommonWall(rooms.get(2), rooms.get(3), Direction.South);
+        mazeBuilder.setCommonWall(rooms.get(3), rooms.get(0), Direction.West);
+        mazeBuilder.setCommonWall(rooms.get(1), rooms.get(4), Direction.North);
 
-        mazeBuilder.setDoor(room1, room2);
-        mazeBuilder.setDoor(room2, room5);
-        mazeBuilder.setDoor(room3, room4);
-        mazeBuilder.setDoor(room4, room1);
+        mazeBuilder.setDoor(rooms.get(0), rooms.get(1));
+        mazeBuilder.setDoor(rooms.get(1), rooms.get(4));
+        mazeBuilder.setDoor(rooms.get(2), rooms.get(3));
+        mazeBuilder.setDoor(rooms.get(3), rooms.get(0));
     }
 }
