@@ -9,20 +9,7 @@ public enum Direction {
         this.value = value;
     }
 
-    public static Direction oppositeSite(Direction direction) {
-        switch(direction) {
-            case East:
-                return West;
-            case South:
-                return North;
-            case West:
-                return East;
-            case North:
-                return South;
-            default:
-                return null;
-        }
-    }
+    public static Direction oppositeSite(Direction direction) { return fromInt((direction.value + 2) % 4); }
 
     public static Direction nextSite(Direction direction) {
         return fromInt((direction.value + 1) % 4);
