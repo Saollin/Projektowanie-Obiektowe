@@ -1,5 +1,6 @@
 package pl.agh.edu.dp.visualisation;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,12 +20,10 @@ import pl.agh.edu.dp.labirynth.elements.Room;
 import pl.agh.edu.dp.labirynth.factories.BombedMazeFactory;
 import pl.agh.edu.dp.labirynth.factories.MazeFactory;
 
-import java.awt.event.KeyEvent;
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MazeGameController {
+public class MazeGameController implements EventHandler<javafx.scene.input.KeyEvent> {
 
     @FXML
     private Label lifeValue;
@@ -40,6 +39,7 @@ public class MazeGameController {
     private Maze maze;
     private static Room startRoom;
     private static Room finishRoom;
+    private boolean doesGameLast = true;
 
     private int rows;
     private int columns;
@@ -50,7 +50,7 @@ public class MazeGameController {
 
     private Player player;
 
-    public MazeGameController() {
+    private MazeGameController() {
         MazeGame game = new MazeGame();
         MazeFactory factory = BombedMazeFactory.getInstance();
         StandardBuilderMaze sbm = new StandardBuilderMaze(factory);
@@ -68,7 +68,6 @@ public class MazeGameController {
 
     public void initialize() {
         drawAll();
-
     }
 
     public void drawAll() {
@@ -88,22 +87,86 @@ public class MazeGameController {
     }
 
     private void drawPlayer() {
-        Room roomOfPlayer = player.getRoom();
+        Room roomOfPlayer = player.getPlayerRoom();
         int number = roomOfPlayer.getRoomNumber();
         int row = number % columns;
         int column = number / columns;
-        System.out.println(column);
         PlayerNode node = new PlayerNode(row * widthOfRoom, column * heightOfRoom, player);
         mazePane.getChildren().add(node);
+        if(roomOfPlayer == finishRoom) {
+            setMessage("Jesteś na mecie! Gratulacje.");
+            doesGameLast = false;
+        }
     }
 
     private void setLifeValue() {
-        lifeValue.setText(String.valueOf(player.getLifeValue()));
+        int life = player.getLifeValue();
+        lifeValue.setText(String.valueOf(life));
+        if(life <= 0) {
+            setMessage("Straciłeś zbyt dużo obrażeń. Koniec gry :(");
+            doesGameLast = false;
+        }
     }
 
-    public void movePlayer() {
-        player.moveRight();
-        drawAll();
+    public void setMessage(String communication) {
+        message.setText(communication);
+    }
+
+    public void movePlayer(Direction direction) {
+        if (doesGameLast) {
+            switch(direction) {
+                case North:
+                    player.moveForward();
+                    break;
+                case East:
+                    player.moveRight();
+                    break;
+                case West:
+                    player.moveLeft();
+                    break;
+                case South:
+                    player.moveBackward();
+                    break;
+            }
+            drawAll();
+        }
+    }
+
+    public void changePlayerRoom(Room first, Room second) {
+        if(player.getPlayerRoom() == first) {
+            player.setPlayerRoom(second);
+            second.Enter();
+        }
+        else {
+            player.setPlayerRoom(first);
+            first.Enter();
+        }
+    }
+
+    public void changePlayerLife(int value) {
+        player.decrementLiveValue(value);
+    }
+
+    @Override
+    public void handle(javafx.scene.input.KeyEvent keyEvent) {
+        switch(keyEvent.getCode()) {
+            case UP:
+            case W:
+                movePlayer(Direction.North);
+                break;
+            case RIGHT:
+            case D:
+                movePlayer(Direction.East);
+                break;
+            case DOWN:
+            case S:
+                movePlayer(Direction.South);
+                break;
+            case LEFT:
+            case A:
+                movePlayer(Direction.West);
+                break;
+        }
     }
 
     public static class RoomNode extends StackPane {
@@ -182,18 +245,7 @@ public class MazeGameController {
             }
         }
     }
-//    public static class PlayerNode extends StackPane {
-//
-//        public PlayerNode(double x, double y, double width, double height, Color color) {
-//            double radius = Math.min(width, height);
-//            Circle circle = new Circle(radius,color);
-//
-//            setTranslateX(x + width/2);
-//            setTranslateY(y + height/2);
-//
-//            getChildren().addAll(circle);
-//        }
-//    }
+
     class PlayerNode extends ImageView {
 
         private Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("arr.png")));
@@ -205,7 +257,7 @@ public class MazeGameController {
             this.setFitHeight(40);
             setTranslateX(x + 5);
             setTranslateY(y + 5);
-            switch(player.getDirection()) {
+            switch(player.getPlayerDirection()) {
                 case North:
                     this.rotateProperty().setValue(270);
                     break;

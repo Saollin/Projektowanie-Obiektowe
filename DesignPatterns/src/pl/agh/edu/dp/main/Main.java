@@ -22,21 +22,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader mazeGameLoader = new FXMLLoader();
         mazeGameLoader.setLocation(getClass().getResource("/fxml/MazeGame.fxml"));
-        MazeGameController mazeGameController = new MazeGameController();
+        MazeGameController mazeGameController = MazeGameController.getInstance();
         mazeGameLoader.setController(mazeGameController);
         Parent root = mazeGameLoader.load();
-        root.setOnKeyPressed(new EventHandler<>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                switch(keyEvent.getCode()){
-                    case KP_UP:
-                        MazeGameController.getInstance().movePlayer();
-                }
-            }
-        });
+        root.setFocusTraversable(true);
+        root.setOnKeyPressed(mazeGameController);
         root.requestFocus();
         primaryStage.setTitle("Maze Game");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.setOnKeyPressed(mazeGameController);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }

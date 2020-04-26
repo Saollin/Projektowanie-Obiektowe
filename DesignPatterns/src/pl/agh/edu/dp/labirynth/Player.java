@@ -3,30 +3,38 @@ package pl.agh.edu.dp.labirynth;
 import pl.agh.edu.dp.labirynth.elements.Room;
 
 public class Player {
-    private Room room;
-    Direction direction;
+    private Room playerRoom;
+    Direction playerDirection;
     private int lifeValue;
 
     public Player(int startLifeValue, Room startRoom, Direction startDirection) {
         this.lifeValue = startLifeValue;
-        this.direction = startDirection;
-        this.room = startRoom;
+        this.playerDirection = startDirection;
+        this.playerRoom = startRoom;
     }
 
-    public Room getRoom() {
-        return room;
+    public Room getPlayerRoom() {
+        return playerRoom;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setPlayerRoom(Room playerRoom) {
+        this.playerRoom = playerRoom;
     }
 
     public void moveRight() {
-        this.direction = Direction.nextSite(this.direction);
+        this.playerDirection = Direction.nextSite(this.playerDirection);
     }
 
     public void moveLeft() {
-        this.direction = Direction.prevSite(this.direction);
+        this.playerDirection = Direction.prevSite(this.playerDirection);
+    }
+
+    public void moveForward() {
+        playerRoom.getSide(playerDirection).Enter();
+    }
+
+    public void moveBackward() {
+        playerRoom.getSide(Direction.oppositeSite(playerDirection)).Enter();
     }
 
     public void decrementLiveValue(int value) {
@@ -37,7 +45,7 @@ public class Player {
         return lifeValue;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public Direction getPlayerDirection() {
+        return playerDirection;
     }
 }

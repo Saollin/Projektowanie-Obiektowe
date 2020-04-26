@@ -1,7 +1,7 @@
 package pl.agh.edu.dp.labirynth;
 
 public enum Direction {
-    North(0), South(1), East(2), West(3);
+    North(0), East(1), South(2), West(3);
 
     private int value;
 
@@ -29,7 +29,7 @@ public enum Direction {
     }
 
     public static Direction prevSite(Direction direction) {
-        return fromInt((direction.value - 1) % 4);
+        return fromInt((direction.value + 3) % 4);
     }
 
     static Direction fromInt(int value) {

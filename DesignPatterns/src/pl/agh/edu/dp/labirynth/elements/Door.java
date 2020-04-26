@@ -1,5 +1,7 @@
 package pl.agh.edu.dp.labirynth.elements;
 
+import pl.agh.edu.dp.visualisation.MazeGameController;
+
 public class Door extends MapSite {
     private Room room1;
     private Room room2;
@@ -12,7 +14,7 @@ public class Door extends MapSite {
 
     @Override
     public void Enter(){
-
+        MazeGameController.getInstance().changePlayerRoom(room1, room2);
     }
 
     public Room getRoom1() {
