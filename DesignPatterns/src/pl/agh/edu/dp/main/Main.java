@@ -24,15 +24,16 @@ public class Main extends Application {
         mazeGameLoader.setLocation(getClass().getResource("/fxml/MazeGame.fxml"));
         MazeGameController mazeGameController = MazeGameController.getInstance();
         mazeGameLoader.setController(mazeGameController);
+
         Parent root = mazeGameLoader.load();
-        root.setFocusTraversable(true);
-        root.setOnKeyPressed(mazeGameController);
-        root.requestFocus();
         primaryStage.setTitle("Maze Game");
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(mazeGameController);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        root.setFocusTraversable(true);
+        root.requestFocus();
     }
 }
 

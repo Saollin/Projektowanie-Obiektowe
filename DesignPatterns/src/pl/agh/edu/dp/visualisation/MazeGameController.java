@@ -1,7 +1,9 @@
 package pl.agh.edu.dp.visualisation;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +36,9 @@ public class MazeGameController implements EventHandler<javafx.scene.input.KeyEv
     @FXML
     private AnchorPane mazePane;
 
+    @FXML
+    private Button restartButton;
+
     private static MazeGameController instance;
 
     private Maze maze;
@@ -41,6 +46,7 @@ public class MazeGameController implements EventHandler<javafx.scene.input.KeyEv
     private static Room finishRoom;
     private boolean doesGameLast = true;
 
+    private int playerStartLife = 30;
     private int rows;
     private int columns;
     private List<Room> rooms;
@@ -63,11 +69,18 @@ public class MazeGameController implements EventHandler<javafx.scene.input.KeyEv
         this.columns = game.getColumns();
         this.rooms = game.getRooms();
 
-        this.player = new Player(30, startRoom, Direction.East);
+        this.player = new Player(playerStartLife, startRoom, Direction.East);
     }
 
     public void initialize() {
         drawAll();
+        restartButton.setOnAction(actionEvent -> {
+              player = new Player(playerStartLife, startRoom, Direction.East);
+              doesGameLast = true;
+              drawAll();
+              mazePane.requestFocus();
+        }
+        );
     }
 
     public void drawAll() {
