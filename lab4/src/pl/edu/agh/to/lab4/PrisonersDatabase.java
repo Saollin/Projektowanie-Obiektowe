@@ -20,7 +20,7 @@ public class PrisonersDatabase {
         addPrisoner("Wiezienie centralne", new Prisoner("Janusz", "Podejrzany", "85121212456", 2012, 1));
     }
 
-    public Map<String, Collection<Prisoner>> findAll() {
+    public Map<String, Collection<Prisoner>> getAllPrisoners() {
         return prisoners;
     }
 
@@ -32,9 +32,5 @@ public class PrisonersDatabase {
         if (!prisoners.containsKey(category))
             prisoners.put(category, new ArrayList<Prisoner>());
         prisoners.get(category).add(prisoner);
-    }
-
-    public static String render(Prisoner prisoner) {
-        return prisoner.name + " " + prisoner.surname;
     }
 }

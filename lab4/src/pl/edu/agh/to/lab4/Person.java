@@ -1,15 +1,15 @@
 package pl.edu.agh.to.lab4;
 
 public class Person {
-    private String firstname;
+    private String name;
 
     private String lastname;
 
     private int age;
 
-    public Person(String firstname, String lastname, int age) {
+    public Person(String name, String lastname, int age) {
         this.age = age;
-        this.firstname = firstname;
+        this.name = name;
         this.lastname = lastname;
     }
 
@@ -17,15 +17,16 @@ public class Person {
         return age;
     }
 
-    public String firstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public String middlename() {
+    public String getLastname() {
         return lastname;
     }
 
-    public String display() {
-        return firstname + " " + lastname;
+    @Override
+    public String toString() {
+        return name + " " + lastname;
     }
 }
