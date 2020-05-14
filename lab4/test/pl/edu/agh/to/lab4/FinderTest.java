@@ -22,6 +22,7 @@ public class FinderTest {
     private Collection<Person> allPersons = new ArrayList<Person>();
 
     private Map<String, Collection<Prisoner>> allPrisoners = new HashMap<String, Collection<Prisoner>>();
+    /*
 
     private Finder suspectFinder = new Finder(allPersons, allPrisoners);
 
@@ -79,5 +80,7 @@ public class FinderTest {
         if (!allPrisoners.containsKey(category))
             allPrisoners.put(category, new ArrayList<Prisoner>());
         allPrisoners.get(category).add(news);
-    }
+    }*/
+
+
 }

@@ -5,9 +5,12 @@ public abstract class Suspect {
 
     private String lastname;
 
-    public Suspect(String name, String lastname) {
+    private int age;
+
+    public Suspect(String name, String lastname, int age) {
         this.name = name;
         this.lastname = lastname;
+        this.age = age;
     }
 
     public String getName() {
@@ -17,6 +20,12 @@ public abstract class Suspect {
     public String getLastname() {
         return lastname;
     }
+
+    public int getAge(){
+        return age;
+    }
+
+    public abstract boolean canBeAccused();
 
     @Override
     public String toString() {
