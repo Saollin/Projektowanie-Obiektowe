@@ -1,17 +1,23 @@
 package pl.edu.agh.to.lab4;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CompositeSearchStrategy implements SearchStrategy {
 
-    private int age;
-    private String name;
+    private List<SearchStrategy> strategies;
 
-    CompositeSearchStrategy(String name, int age){
-        this.name = name;
-        this.age = age;
+    CompositeSearchStrategy(SearchStrategy... strategies) {
+        this.strategies = new ArrayList<>(Arrays.asList(strategies));
     }
 
     @Override
     public boolean filter(Suspect suspect) {
-        return (suspect.getName().equals(this.name) && suspect.getAge() == age);
+        boolean result = true;
+        for(SearchStrategy strategy : strategies) {
+            result &= strategy.filter(suspect);
+        }
+        return result;
     }
 }

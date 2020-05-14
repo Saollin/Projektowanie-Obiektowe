@@ -8,6 +8,6 @@ public class Application {
         Finder suspects = new Finder(compositeAggregate);
         //suspects.display(new NameSearchStrategy("Janusz"));
         //suspects.display(new AgeSearchStrategy(30));
-        suspects.display(new CompositeSearchStrategy("Janusz", 30));
+        suspects.display(new CompositeSearchStrategy(new NameSearchStrategy("Janusz"), new AgeSearchStrategy(30)));
     }
 }
