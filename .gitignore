@@ -5,3 +5,5 @@
 */libs/
 *.class
 */.settings/
+*/.gradle/
+*/build/
