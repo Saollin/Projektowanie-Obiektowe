@@ -113,6 +113,10 @@ public class Order {
         this.discount = new Discount(discount);
     }
 
+    public User getPurchaser() {
+        return purchaser;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
