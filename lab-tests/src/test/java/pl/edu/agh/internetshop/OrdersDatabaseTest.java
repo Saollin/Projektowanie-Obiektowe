@@ -1,12 +1,12 @@
 package pl.edu.agh.internetshop;
 
 import org.junit.jupiter.api.Test;
+import pl.edu.agh.database.OrdersDatabase;
 
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
 
 class OrdersDatabaseTest {
 
