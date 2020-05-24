@@ -20,13 +20,12 @@ public class Order {
         this.products = Objects.requireNonNull(products);
         id = UUID.randomUUID();
         paid = false;
+        OrdersDatabase.addOrder(this);
         this.discount = new Discount(0);
     }
 
     public Order(List<Product> products, double discountValue) {
-        this.products = Objects.requireNonNull(products);
-        id = UUID.randomUUID();
-        paid = false;
+        this(products);
         this.discount = new Discount(discountValue);
     }
 
@@ -108,5 +107,24 @@ public class Order {
 
     public void setDiscount(double discount) {
         this.discount = new Discount(discount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return paid == order.paid &&
+                id.equals(order.id) &&
+                products.equals(order.products) &&
+                Objects.equals(shipment, order.shipment) &&
+                Objects.equals(shipmentMethod, order.shipmentMethod) &&
+                Objects.equals(paymentMethod, order.paymentMethod) &&
+                discount.equals(order.discount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, products, paid, shipment, shipmentMethod, paymentMethod, discount);
     }
 }
