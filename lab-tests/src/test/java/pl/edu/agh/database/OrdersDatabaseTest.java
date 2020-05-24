@@ -1,7 +1,8 @@
-package pl.edu.agh.internetshop;
+package pl.edu.agh.database;
 
 import org.junit.jupiter.api.Test;
 import pl.edu.agh.database.OrdersDatabase;
+import pl.edu.agh.internetshop.*;
 
 import java.util.Collections;
 
