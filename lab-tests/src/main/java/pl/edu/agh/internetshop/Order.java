@@ -14,11 +14,20 @@ public class Order {
     private Shipment shipment;
     private ShipmentMethod shipmentMethod;
     private PaymentMethod paymentMethod;
+    private Discount discount;
 
     public Order(List<Product> products) {
         this.products = Objects.requireNonNull(products);
         id = UUID.randomUUID();
         paid = false;
+        this.discount = new Discount(0);
+    }
+
+    public Order(List<Product> products, double discountValue) {
+        this.products = Objects.requireNonNull(products);
+        id = UUID.randomUUID();
+        paid = false;
+        this.discount = new Discount(discountValue);
     }
 
     public UUID getId() {
@@ -51,8 +60,20 @@ public class Order {
         return result;
     }
 
+    public BigDecimal getDiscountPrice() {
+        BigDecimal result = BigDecimal.valueOf(0);
+        for(Product p : products) {
+            result = result.add(p.getDiscountPrice());
+        }
+        return result.multiply(discount.getDiscountMultiplier());
+    }
+
     public BigDecimal getPriceWithTaxes() {
         return getPrice().multiply(TAX_VALUE).setScale(Product.PRICE_PRECISION, Product.ROUND_STRATEGY);
+    }
+
+    public BigDecimal getDiscountPriceWithTaxes() {
+        return getDiscountPrice().multiply(TAX_VALUE).setScale(Product.PRICE_PRECISION, Product.ROUND_STRATEGY);
     }
 
     public List<Product> getProducts() {
@@ -79,5 +100,13 @@ public class Order {
 
     public void setShipment(Shipment shipment) {
         this.shipment = shipment;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = new Discount(discount);
     }
 }

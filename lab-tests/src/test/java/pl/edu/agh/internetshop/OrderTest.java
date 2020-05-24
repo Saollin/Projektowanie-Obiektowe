@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -253,5 +252,136 @@ public class OrderTest {
 
 		// then
 		assertFalse(order.isPaid());
+	}
+
+	@Test
+	public void testOrderDiscount() throws Exception{
+		//given
+		Product product = mock(Product.class);
+		double discountValue = 25.5;
+		Discount expectedDiscount = new Discount(discountValue);
+
+		// when
+		Order order = new Order(Collections.singletonList(product), discountValue);
+
+		// thenf
+		assertEquals(order.getDiscount(), expectedDiscount);
+	}
+
+	@Test
+	public void testSetDiscount() {
+		//given
+		Product product = mock(Product.class);
+		double discountValue = 25.5;
+		Order order = new Order(Collections.singletonList(product));
+		Discount expectedDiscount = new Discount(discountValue);
+
+		// when
+		order.setDiscount(discountValue);
+
+		// thenf
+		assertEquals(order.getDiscount(), expectedDiscount);
+	}
+
+	@Test
+	public void testGetDiscountOnlyOrder() {
+		// given
+		BigDecimal productPrice1 = BigDecimal.valueOf(1000);
+		BigDecimal productPrice2 = BigDecimal.valueOf(50.99);
+		BigDecimal productPrice3 = BigDecimal.valueOf(2000.99);
+		BigDecimal sumPrice = productPrice1.add(productPrice2).add(productPrice3);
+		Product product1 = mock(Product.class);
+		Product product2 = mock(Product.class);
+		Product product3 = mock(Product.class);
+		given(product1.getDiscountPrice()).willReturn(productPrice1);
+		given(product2.getDiscountPrice()).willReturn(productPrice2);
+		given(product3.getDiscountPrice()).willReturn(productPrice3);
+		Order order = new Order(Arrays.asList(product1, product2, product3));
+		double discountValue = 20.5;
+		Discount discount = new Discount(discountValue);
+		order.setDiscount(discountValue);
+		BigDecimal expectedPrice = sumPrice.multiply(discount.getDiscountMultiplier());
+
+		// when
+		BigDecimal actualProductPrice = order.getDiscountPrice();
+
+		// then
+		assertBigDecimalCompareValue(expectedPrice, actualProductPrice);
+	}
+
+	@Test
+	public void testOrderWithoutDiscountReturnTheSameDiscountPriceAsNormal() {
+		// given
+		BigDecimal productPrice1 = BigDecimal.valueOf(1000);
+		BigDecimal productPrice2 = BigDecimal.valueOf(50.99);
+		BigDecimal productPrice3 = BigDecimal.valueOf(2000.99);
+		Product product1 = mock(Product.class);
+		Product product2 = mock(Product.class);
+		Product product3 = mock(Product.class);
+		given(product1.getDiscountPrice()).willReturn(productPrice1);
+		given(product2.getDiscountPrice()).willReturn(productPrice2);
+		given(product3.getDiscountPrice()).willReturn(productPrice3);
+		given(product1.getPrice()).willReturn(productPrice1);
+		given(product2.getPrice()).willReturn(productPrice2);
+		given(product3.getPrice()).willReturn(productPrice3);
+		Order order = new Order(Arrays.asList(product1, product2, product3));
+
+		// when
+		BigDecimal actualPrice = order.getDiscountPrice();
+		BigDecimal expectedPrice = order.getPrice();
+
+		// then
+		assertBigDecimalCompareValue(expectedPrice, actualPrice);
+	}
+
+	@Test
+	public void testDiscountPriceWithDiscountedProducts() {
+		// given
+		Discount discount1 = new Discount(20);
+		Discount discount2 = new Discount(40);
+		BigDecimal productPrice1 = BigDecimal.valueOf(1000).multiply(discount1.getDiscountMultiplier());
+		BigDecimal productPrice2 = BigDecimal.valueOf(50.99).multiply(discount2.getDiscountMultiplier());
+		BigDecimal productPrice3 = BigDecimal.valueOf(2000.99);
+		Product product1 = mock(Product.class);
+		Product product2 = mock(Product.class);
+		Product product3 = mock(Product.class);
+		given(product1.getDiscountPrice()).willReturn(productPrice1);
+		given(product2.getDiscountPrice()).willReturn(productPrice2);
+		given(product3.getDiscountPrice()).willReturn(productPrice3);
+		Order order = new Order(Arrays.asList(product1, product2, product3));
+
+		// when
+		BigDecimal actualPrice = order.getDiscountPrice();
+		BigDecimal expectedPrice = productPrice1.add(productPrice2).add(productPrice3);
+
+		// then
+		assertBigDecimalCompareValue(expectedPrice, actualPrice);
+	}
+
+	@Test
+	public void testDiscountPriceWithDiscountedProductsAndDiscountOrder() {
+		// given
+		Discount discount1 = new Discount(20);
+		Discount discount2 = new Discount(40);
+		BigDecimal productPrice1 = BigDecimal.valueOf(1000).multiply(discount1.getDiscountMultiplier());
+		BigDecimal productPrice2 = BigDecimal.valueOf(50.99).multiply(discount2.getDiscountMultiplier());
+		BigDecimal productPrice3 = BigDecimal.valueOf(2000.99);
+		BigDecimal sumPrice = productPrice1.add(productPrice2).add(productPrice3);
+		Product product1 = mock(Product.class);
+		Product product2 = mock(Product.class);
+		Product product3 = mock(Product.class);
+		given(product1.getDiscountPrice()).willReturn(productPrice1);
+		given(product2.getDiscountPrice()).willReturn(productPrice2);
+		given(product3.getDiscountPrice()).willReturn(productPrice3);
+		double discountValue = 5;
+		Discount generalDiscount = new Discount(discountValue);
+		Order order = new Order(Arrays.asList(product1, product2, product3), discountValue);
+
+		// when
+		BigDecimal actualPrice = order.getDiscountPrice();
+		BigDecimal expectedPrice = sumPrice.multiply(generalDiscount.getDiscountMultiplier());
+
+		// then
+		assertBigDecimalCompareValue(expectedPrice, actualPrice);
 	}
 }
