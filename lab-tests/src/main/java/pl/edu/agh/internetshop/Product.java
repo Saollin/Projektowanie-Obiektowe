@@ -10,11 +10,20 @@ public class Product {
 	
     private final String name;
     private final BigDecimal price;
+    private Discount discount;
 
     public Product(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
         this.price.setScale(PRICE_PRECISION, ROUND_STRATEGY);
+        this.discount = new Discount(0);
+    }
+
+    public Product(String name, BigDecimal price, double discount) {
+        this.name = name;
+        this.price = price;
+        this.price.setScale(PRICE_PRECISION, ROUND_STRATEGY);
+        this.discount = new Discount(discount);
     }
 
     public String getName() {
@@ -23,5 +32,17 @@ public class Product {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public BigDecimal getDiscountPrice() {
+        return price.multiply(discount.getDiscount());
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = new Discount(discount);
     }
 }
