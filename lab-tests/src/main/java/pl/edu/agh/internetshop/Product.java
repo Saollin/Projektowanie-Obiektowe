@@ -35,7 +35,7 @@ public class Product {
     }
 
     public BigDecimal getDiscountPrice() {
-        return price.multiply(discount.getDiscount());
+        return price.multiply(discount.getDiscountMultiplier());
     }
 
     public Discount getDiscount() {

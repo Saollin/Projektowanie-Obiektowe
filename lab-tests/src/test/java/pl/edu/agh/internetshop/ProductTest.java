@@ -62,7 +62,7 @@ public class ProductTest {
     @Test
     public void testDiscountProductPrice() throws Exception{
         //given
-        BigDecimal expectedPrice = PRICE.multiply(DISCOUNT.getDiscount());
+        BigDecimal expectedPrice = PRICE.multiply(DISCOUNT.getDiscountMultiplier());
         Product product = new Product(NAME, PRICE, DISCOUNT_VALUE);
 
         // when

@@ -10,14 +10,14 @@ import static pl.edu.agh.internetshop.util.CustomAssertions.assertBigDecimalComp
 class DiscountTest {
 
     @Test
-    public void testGetDiscount() {
+    public void testGetDiscountMultiplier() {
         // given
         double discountInPercent = 20.5;
         BigDecimal expectedDiscount = BigDecimal.valueOf((100 - discountInPercent)/100.0);
         Discount discount = new Discount(discountInPercent);
 
         // when
-        BigDecimal actualDiscount = discount.getDiscount();
+        BigDecimal actualDiscount = discount.getDiscountMultiplier();
 
         // then
         assertBigDecimalCompareValue(expectedDiscount, actualDiscount);
@@ -42,7 +42,7 @@ class DiscountTest {
         Discount discount = new Discount(0);
 
         // when
-        BigDecimal actualDiscount = discount.getDiscount();
+        BigDecimal actualDiscount = discount.getDiscountMultiplier();
 
         // then
         assertBigDecimalCompareValue(expectedDiscount, actualDiscount);
@@ -55,7 +55,7 @@ class DiscountTest {
         Discount discount = new Discount(100);
 
         // when
-        BigDecimal actualDiscount = discount.getDiscount();
+        BigDecimal actualDiscount = discount.getDiscountMultiplier();
 
         // then
         assertBigDecimalCompareValue(expectedDiscount, actualDiscount);
@@ -70,7 +70,7 @@ class DiscountTest {
         discount.changeDiscount(newDiscountValue);
 
         // when
-        BigDecimal actualDiscount = discount.getDiscount();
+        BigDecimal actualDiscount = discount.getDiscountMultiplier();
 
         // then
         assertBigDecimalCompareValue(expectedDiscount, actualDiscount);
