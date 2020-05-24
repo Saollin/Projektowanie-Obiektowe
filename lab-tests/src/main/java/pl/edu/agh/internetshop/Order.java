@@ -15,17 +15,19 @@ public class Order {
     private ShipmentMethod shipmentMethod;
     private PaymentMethod paymentMethod;
     private Discount discount;
+    private User purchaser;
 
-    public Order(List<Product> products) {
+    public Order(List<Product> products, User purchaser) {
         this.products = Objects.requireNonNull(products);
         id = UUID.randomUUID();
         paid = false;
+        this.purchaser = purchaser;
         OrdersDatabase.addOrder(this);
         this.discount = new Discount(0);
     }
 
-    public Order(List<Product> products, double discountValue) {
-        this(products);
+    public Order(List<Product> products, User purchaser, double discountValue) {
+        this(products, purchaser);
         this.discount = new Discount(discountValue);
     }
 

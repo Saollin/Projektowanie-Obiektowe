@@ -15,16 +15,18 @@ import static pl.edu.agh.internetshop.util.CustomAssertions.assertBigDecimalComp
 
 public class OrderTest {
 
+	private static User user = mock(User.class);
+
 	private Order getOrderWithMockedProduct() {
 		Product product = mock(Product.class);
-		return new Order(Collections.singletonList(product));
+		return new Order(Collections.singletonList(product), user);
 	}
 
 	@Test
 	public void testGetProductThroughOrder() {
 		// given
 		Product expectedProduct = mock(Product.class);
-		Order order = new Order(Collections.singletonList(expectedProduct));
+		Order order = new Order(Collections.singletonList(expectedProduct), user);
 
 		// when
 		List<Product> actualProducts = order.getProducts();
@@ -36,7 +38,7 @@ public class OrderTest {
 	@Test
 	public void testProductListInNull() {
 		// when then
-		assertThrows(NullPointerException.class, () -> new Order(null));
+		assertThrows(NullPointerException.class, () -> new Order(null, user));
 	}
 
 	@Test
@@ -45,7 +47,7 @@ public class OrderTest {
 		Product expectedProduct1 = mock(Product.class);
 		Product expectedProduct2 = mock(Product.class);
 		Product expectedProduct3 = mock(Product.class);
-		Order order = new Order(Arrays.asList(expectedProduct1,expectedProduct2, expectedProduct3));
+		Order order = new Order(Arrays.asList(expectedProduct1,expectedProduct2, expectedProduct3), user);
 
 		//when
 		List<Product> actualProducts = order.getProducts();
@@ -86,7 +88,7 @@ public class OrderTest {
 		BigDecimal expectedProductPrice = BigDecimal.valueOf(1000);
 		Product product = mock(Product.class);
 		given(product.getPrice()).willReturn(expectedProductPrice);
-		Order order = new Order(Collections.singletonList(product));
+		Order order = new Order(Collections.singletonList(product), user);
 
 		// when
 		BigDecimal actualProductPrice = order.getPrice();
@@ -108,7 +110,7 @@ public class OrderTest {
 		given(product1.getPrice()).willReturn(productPrice1);
 		given(product2.getPrice()).willReturn(productPrice2);
 		given(product3.getPrice()).willReturn(productPrice3);
-		Order order = new Order(Arrays.asList(product1, product2, product3));
+		Order order = new Order(Arrays.asList(product1, product2, product3), user);
 
 		// when
 		BigDecimal actualProductPrice = order.getPrice();
@@ -121,7 +123,7 @@ public class OrderTest {
 		BigDecimal productPrice = BigDecimal.valueOf(productPriceValue);
 		Product product = mock(Product.class);
 		given(product.getPrice()).willReturn(productPrice);
-		return new Order(Collections.singletonList(product));
+		return new Order(Collections.singletonList(product), user);
 	}
 
 	@Test
@@ -262,7 +264,7 @@ public class OrderTest {
 		Discount expectedDiscount = new Discount(discountValue);
 
 		// when
-		Order order = new Order(Collections.singletonList(product), discountValue);
+		Order order = new Order(Collections.singletonList(product), user, discountValue);
 
 		// thenf
 		assertEquals(order.getDiscount(), expectedDiscount);
@@ -273,7 +275,7 @@ public class OrderTest {
 		//given
 		Product product = mock(Product.class);
 		double discountValue = 25.5;
-		Order order = new Order(Collections.singletonList(product));
+		Order order = new Order(Collections.singletonList(product), user);
 		Discount expectedDiscount = new Discount(discountValue);
 
 		// when
@@ -296,7 +298,7 @@ public class OrderTest {
 		given(product1.getDiscountPrice()).willReturn(productPrice1);
 		given(product2.getDiscountPrice()).willReturn(productPrice2);
 		given(product3.getDiscountPrice()).willReturn(productPrice3);
-		Order order = new Order(Arrays.asList(product1, product2, product3));
+		Order order = new Order(Arrays.asList(product1, product2, product3), user);
 		double discountValue = 20.5;
 		Discount discount = new Discount(discountValue);
 		order.setDiscount(discountValue);
@@ -324,7 +326,7 @@ public class OrderTest {
 		given(product1.getPrice()).willReturn(productPrice1);
 		given(product2.getPrice()).willReturn(productPrice2);
 		given(product3.getPrice()).willReturn(productPrice3);
-		Order order = new Order(Arrays.asList(product1, product2, product3));
+		Order order = new Order(Arrays.asList(product1, product2, product3), user);
 
 		// when
 		BigDecimal actualPrice = order.getDiscountPrice();
@@ -348,7 +350,7 @@ public class OrderTest {
 		given(product1.getDiscountPrice()).willReturn(productPrice1);
 		given(product2.getDiscountPrice()).willReturn(productPrice2);
 		given(product3.getDiscountPrice()).willReturn(productPrice3);
-		Order order = new Order(Arrays.asList(product1, product2, product3));
+		Order order = new Order(Arrays.asList(product1, product2, product3), user);
 
 		// when
 		BigDecimal actualPrice = order.getDiscountPrice();
@@ -375,7 +377,7 @@ public class OrderTest {
 		given(product3.getDiscountPrice()).willReturn(productPrice3);
 		double discountValue = 5;
 		Discount generalDiscount = new Discount(discountValue);
-		Order order = new Order(Arrays.asList(product1, product2, product3), discountValue);
+		Order order = new Order(Arrays.asList(product1, product2, product3), user, discountValue);
 
 		// when
 		BigDecimal actualPrice = order.getDiscountPrice();

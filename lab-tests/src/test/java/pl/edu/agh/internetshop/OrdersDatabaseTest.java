@@ -12,7 +12,8 @@ class OrdersDatabaseTest {
 
     private Order getOrderWithMockProduct() {
         Product product = mock(Product.class);
-        return new Order(Collections.singletonList(product));
+        User user = mock(User.class);
+        return new Order(Collections.singletonList(product), user);
     }
 
     @Test
