@@ -1,11 +1,12 @@
 package pl.edu.agh.internetshop;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Product {
 	
 	public static final int PRICE_PRECISION = 2;
-	public static final int ROUND_STRATEGY = BigDecimal.ROUND_HALF_UP;
+	public static final RoundingMode ROUND_STRATEGY = RoundingMode.HALF_UP;
 	
     private final String name;
     private final BigDecimal price;
