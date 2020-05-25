@@ -16,6 +16,10 @@ public class OrdersDatabase {
         return orders.get(id);
     }
 
+    public static void clearDatabase() {
+        orders = new HashMap<>();
+    }
+
     public static List<Order> find(SearchStrategy searchStrategy) {
         List<Order> result = new ArrayList<>();
         for(Order o : orders.values()) {
